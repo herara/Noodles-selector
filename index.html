@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Vue.js-條件顯示&amp;資料展開-拉麵資料</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div id="app">
+  <div class="control">
+    <label>最小價錢</label>
+    <input v-model="minPrice"/>
+    <label>最大價錢</label>
+    <input v-model="maxPrice"/>
+    <label>查詢關鍵字</label>
+    <input v-model="keyword"/><br/><span v-for="(card,cid) in cards"><span>{{cid}}</span>
+      <input v-model.number="card.price"/>
+      <input type="checkbox" v-model="card.soldOut"/></span>
+  </div>
+  <div class="menu">
+    <h4 v-if="keyword">以下符合搜尋{{keyword}}的項目</h4>
+    <div class="cards">
+      <div class="card" v-for="card in cards" v-if="(basePrice+card.price&gt;minPrice)&amp;&amp; (basePrice+card.price&lt;maxPrice) &amp;&amp; (card.title.indexOf(keyword)!=-1)"><img class="cover" v-bind:src="card.cover"/>
+        <div class="info"> 
+          <h3>{{card.title}}
+            <div class="soldOut" v-show="card.soldOut">已售完</div>
+          </h3>
+          <div class="price">${{basePrice+ card.price}}
+            <div class="other">( +{{serviceFee}}%服務費)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>
